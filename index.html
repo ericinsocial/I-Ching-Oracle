@@ -1,425 +1,125 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>Oracle of Change</title>
+  <title>Oracle of Change</title>
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:"Noto Sans TC",sans-serif;
-}
-
-body{
-background:#050505;
-color:white;
-height:100vh;
-overflow:hidden;
-}
-
-/* 頁面 */
-
-.page{
-position:absolute;
-width:100%;
-height:100%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-padding:20px;
-}
-
-/* 首頁 */
-
-#home h1{
-margin-bottom:30px;
-font-size:32px;
-}
-
-.questionBtn{
-
-width:260px;
-padding:16px;
-
-margin:10px;
-
-background:#111;
-
-border:1px solid #D02753;
-
-color:white;
-
-border-radius:12px;
-
-font-size:20px;
-
-cursor:pointer;
-
-transition:.3s;
-}
-
-.questionBtn:hover{
-
-background:#D02753;
-
-}
-
-/* 動畫頁 */
-
-#animation{
-
-display:none;
-
-background:
-radial-gradient(
-circle,
-rgba(208,39,83,.4),
-#050505 70%
-);
-
-}
-
-.orb{
-
-width:180px;
-height:180px;
-
-border-radius:50%;
-
-background:
-radial-gradient(
-circle,
-#fff7c2,
-#f5c76d,
-#D02753
-);
-
-box-shadow:
-0 0 40px #f5c76d,
-0 0 120px #D02753;
-
-animation:
-pulse 2s infinite,
-spin 10s linear infinite;
-}
-
-@keyframes pulse{
-
-0%,100%{
-transform:scale(1);
-}
-
-50%{
-transform:scale(1.15);
-}
-
-}
-
-@keyframes spin{
-
-from{
-rotate:0deg;
-}
-
-to{
-rotate:360deg;
-}
-
-}
-
-.message{
-
-margin-top:40px;
-
-font-size:24px;
-
-letter-spacing:3px;
-
-text-align:center;
-}
-
-.ring{
-
-position:absolute;
-
-width:500px;
-height:500px;
-
-animation:
-spin 30s linear infinite reverse;
-}
-
-.hex{
-
-position:absolute;
-
-color:#f5c76d;
-
-font-size:18px;
-
-text-shadow:
-0 0 10px #f5c76d;
-}
-
-/* 結果頁 */
-
-#result{
-
-display:none;
-
-text-align:center;
-
-padding:30px;
-}
-
-#hexName{
-
-font-size:36px;
-
-margin-bottom:20px;
-
-color:#f5c76d;
-}
-
-#oracleText{
-
-max-width:600px;
-
-line-height:1.8;
-
-font-size:20px;
-
-margin-bottom:30px;
-}
-
-.actionBtn{
-
-padding:14px 30px;
-
-background:#D02753;
-
-border:none;
-
-border-radius:10px;
-
-color:white;
-
-font-size:18px;
-
-cursor:pointer;
-}
-
-</style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<!-- 首頁 -->
+  <!-- 首頁：選問題 -->
+  <main id="homePage" class="page active">
 
-<div id="home" class="page">
+    <section class="home-card">
 
-<h1>請選擇問題方向</h1>
+      <p class="eyebrow">Oracle of Change</p>
 
-<button class="questionBtn" onclick="startOracle('love')">
-❤️ 感情
-</button>
+      <h1>請選擇你想獲得指引的方向</h1>
 
-<button class="questionBtn" onclick="startOracle('career')">
-💼 工作
-</button>
+      <p class="intro">
+        靜下心來，默念你的問題。<br>
+        選擇一個方向，讓卦象為你帶來今日的提醒。
+      </p>
 
-<button class="questionBtn" onclick="startOracle('wealth')">
-💰 財運
-</button>
+      <div class="question-grid">
 
-<button class="questionBtn" onclick="startOracle('general')">
-☯ 綜合指引
-</button>
+        <button class="question-btn" data-category="love">
+          <span>❤️</span>
+          <strong>感情</strong>
+        </button>
 
-</div>
+        <button class="question-btn" data-category="career">
+          <span>💼</span>
+          <strong>工作</strong>
+        </button>
 
-<!-- 動畫 -->
+        <button class="question-btn" data-category="wealth">
+          <span>💰</span>
+          <strong>財運</strong>
+        </button>
 
-<div id="animation" class="page">
+        <button class="question-btn" data-category="general">
+          <span>☯</span>
+          <strong>我也不知道問什麼</strong>
+        </button>
 
-<div class="ring" id="ring"></div>
+      </div>
 
-<div class="orb"></div>
+    </section>
 
-<div class="message" id="message">
-靜心感受你的問題
-</div>
+  </main>
 
-</div>
 
-<!-- 結果 -->
+  <!-- 動畫頁 -->
+  <section id="animationPage" class="page">
 
-<div id="result" class="page">
+    <canvas id="oracleCanvas"></canvas>
 
-<div id="hexName"></div>
+    <div class="animation-overlay">
 
-<div id="oracleText"></div>
+      <div id="animationMessage" class="animation-message">
+        靜心感受你的問題
+      </div>
 
-<button class="actionBtn" onclick="location.reload()">
-再抽一次
-</button>
+      <div id="revealedHexagram" class="revealed-hexagram hidden">
+        <span id="revealedNumber"></span>
+        <strong id="revealedName"></strong>
+      </div>
 
-</div>
+    </div>
 
-<script>
+  </section>
 
-let currentCategory = "";
 
-const hexagrams = [
+  <!-- 結果頁 -->
+  <section id="resultPage" class="page">
 
-{
-name:"乾卦",
-oracle:"保持主動與自信，你已經具備改變局勢的能力。"
-},
+    <div class="result-card">
 
-{
-name:"坤卦",
-oracle:"先接受現況，等待適合的時機再行動。"
-},
+      <p id="resultCategory" class="result-category"></p>
 
-{
-name:"震卦",
-oracle:"變化即將到來，不要害怕新的開始。"
-},
+      <h2 id="resultName"></h2>
 
-{
-name:"巽卦",
-oracle:"柔軟比強硬更有力量。"
-},
+      <p id="resultSymbol" class="result-symbol"></p>
 
-{
-name:"坎卦",
-oracle:"眼前雖有阻礙，但其中隱藏著成長的契機。"
-},
+      <div class="result-block">
+        <h3>卦象</h3>
+        <p id="resultImage"></p>
+      </div>
 
-{
-name:"離卦",
-oracle:"真相正在浮現，請相信自己的判斷。"
-},
+      <div class="result-block">
+        <h3>神諭</h3>
+        <p id="resultOracle"></p>
+      </div>
 
-{
-name:"艮卦",
-oracle:"停下腳步觀察，答案就在細節裡。"
-},
+      <div class="result-block">
+        <h3>今日提醒</h3>
+        <p id="resultAdvice"></p>
+      </div>
 
-{
-name:"兌卦",
-oracle:"分享與交流將帶來新的機會。"
-}
+      <div class="button-row">
 
-];
+        <button id="drawAgainBtn" class="main-btn">
+          再抽一次
+        </button>
 
-function startOracle(category){
+        <button id="backHomeBtn" class="ghost-btn">
+          回到首頁
+        </button>
 
-currentCategory = category;
+      </div>
 
-document.getElementById("home").style.display="none";
-document.getElementById("animation").style.display="flex";
+    </div>
 
-runAnimation();
+  </section>
 
-}
 
-function runAnimation(){
-
-const messages=[
-
-"靜心感受你的問題",
-
-"天地有道\n萬物有時",
-
-"卦象正在形成..."
-
-];
-
-let i=0;
-
-const msg=document.getElementById("message");
-
-const timer=setInterval(()=>{
-
-i++;
-
-if(i<messages.length){
-
-msg.innerHTML=messages[i].replace("\n","<br>");
-
-}
-
-},2500);
-
-setTimeout(()=>{
-
-clearInterval(timer);
-
-showResult();
-
-},7000);
-
-}
-
-function showResult(){
-
-document.getElementById("animation").style.display="none";
-document.getElementById("result").style.display="flex";
-
-const random =
-Math.floor(
-Math.random()*hexagrams.length
-);
-
-const selected =
-hexagrams[random];
-
-document.getElementById("hexName").innerHTML =
-selected.name;
-
-document.getElementById("oracleText").innerHTML =
-selected.oracle;
-
-}
-
-const ring=document.getElementById("ring");
-
-const names=[
-"乾","坤","震","巽","坎","離","艮","兌"
-];
-
-for(let i=0;i<names.length;i++){
-
-const div=document.createElement("div");
-
-div.className="hex";
-
-div.innerText=names[i];
-
-const angle=(360/names.length)*i;
-
-const r=220;
-
-div.style.left=
-250+Math.cos(angle*Math.PI/180)*r+"px";
-
-div.style.top=
-250+Math.sin(angle*Math.PI/180)*r+"px";
-
-ring.appendChild(div);
-
-}
-
-</script>
+  <script src="oracle.js"></script>
+  <script src="animation.js"></script>
 
 </body>
 </html>
