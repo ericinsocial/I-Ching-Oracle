@@ -101,17 +101,7 @@ function revealHexagram() {
 ========================================== */
 
 function createHexagramResult(hexagram) {
-    const category = getSafeCategory();
-    const categoryData = hexagram[category] || hexagram.general || {};
-
-    return {
-        number: hexagram.number || "",
-        name: hexagram.name || "",
-        symbol: hexagram.symbol || "",
-        image: hexagram.image || "",
-        oracle: categoryData.oracle || "",
-        advice: categoryData.advice || ""
-    };
+    return hexagram || {};
 }
 
 function getSafeCategory() {
@@ -126,16 +116,17 @@ function getSafeCategory() {
    結果頁
 ========================================== */
 
-function showResult(hexagram) {
+function showResult(hex) {
+    const categoryData = hex[selectedCategory] || hex.general || {};
+
     animationPage.classList.remove("active");
     resultPage.classList.add("active");
 
+    document.getElementById("resultTitle").innerHTML = hex.title || hex.name || "";
+    document.getElementById("resultTrigram").innerHTML = hex.upper && hex.lower ? `上${hex.upper}下${hex.lower}` : "";
     document.getElementById("resultCategory").innerHTML = getCategoryText();
-    document.getElementById("resultName").innerHTML = hexagram.name;
-    document.getElementById("resultSymbol").innerHTML = hexagram.symbol;
-    document.getElementById("resultImage").innerHTML = hexagram.image;
-    document.getElementById("resultOracle").innerHTML = hexagram.oracle;
-    document.getElementById("resultAdvice").innerHTML = hexagram.advice || "";
+    document.getElementById("resultAdvice").innerHTML = categoryData.advice || "";
+    document.getElementById("resultOracle").innerHTML = categoryData.oracle || "";
 }
 
 /* ==========================================
@@ -145,13 +136,13 @@ function showResult(hexagram) {
 function getCategoryText() {
     switch (getSafeCategory()) {
         case "love":
-            return "❤️ 感情指引";
+            return "今感情提醒";
         case "career":
-            return "💼 工作指引";
+            return "今工作提醒";
         case "wealth":
-            return "💰 財運指引";
+            return "今財運提醒";
         default:
-            return "☯ 綜合指引";
+            return "今人生提醒";
     }
 }
 
