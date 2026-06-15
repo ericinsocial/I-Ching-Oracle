@@ -141,6 +141,8 @@ function getCategoryText() {
             return "今工作提醒";
         case "wealth":
             return "今財運提醒";
+        case "general":
+            return "今人生提醒";
         default:
             return "今人生提醒";
     }
