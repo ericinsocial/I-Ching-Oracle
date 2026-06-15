@@ -321,44 +321,47 @@ body{
     padding:36px;
 }
 
-.result-category{
-
-    color:#f5c76d;
-
-    letter-spacing:2px;
-
-    margin-bottom:10px;
-}
-
-#resultName{
+#resultTitle{
 
     font-size:42px;
 
     margin-bottom:12px;
 }
 
-.result-symbol{
+.result-trigram{
 
     color:#bbbbbb;
 
-    margin-bottom:30px;
+    margin-bottom:22px;
 }
 
-.result-block{
+.result-trigram:empty{
 
-    margin-bottom:26px;
+    display:none;
 }
 
-.result-block h3{
+.result-separator{
+
+    color:rgba(245,199,109,.65);
+
+    letter-spacing:2px;
+
+    margin:24px 0;
+}
+
+.result-category{
 
     color:#f5c76d;
 
-    margin-bottom:10px;
+    letter-spacing:2px;
+
+    margin-bottom:14px;
 
     font-size:18px;
 }
 
-.result-block p{
+.result-advice,
+.result-oracle{
 
     line-height:1.9;
 
@@ -443,7 +446,7 @@ body{
         font-size:36px;
     }
 
-    #resultName{
+    #resultTitle{
 
         font-size:32px;
     }
