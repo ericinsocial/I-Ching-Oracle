@@ -135,7 +135,9 @@ document
 ========================================== */
 
 function startAnimation(){
-
+if(window.resetOracleAnimation){
+    window.resetOracleAnimation();
+}
     homePage.classList.remove("active");
     animationPage.classList.add("active");
 
