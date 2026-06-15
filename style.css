@@ -1,0 +1,455 @@
+/* =========================
+   GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+
+    font-family:
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    sans-serif;
+
+    background:#030303;
+
+    color:white;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+
+    position:absolute;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:24px;
+}
+
+.page.active{
+    display:flex;
+}
+
+
+/* =========================
+   HOME
+========================= */
+
+.home-card{
+
+    width:100%;
+    max-width:520px;
+
+    text-align:center;
+
+    z-index:10;
+}
+
+.eyebrow{
+
+    color:#f5c76d;
+
+    letter-spacing:4px;
+
+    margin-bottom:16px;
+
+    font-size:14px;
+}
+
+.home-card h1{
+
+    font-size:32px;
+
+    line-height:1.4;
+
+    margin-bottom:20px;
+}
+
+.intro{
+
+    color:#cccccc;
+
+    line-height:1.8;
+
+    margin-bottom:40px;
+}
+
+
+/* =========================
+   QUESTION BUTTONS
+========================= */
+
+.question-grid{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+}
+
+.question-btn{
+
+    border:none;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(208,39,83,.25),
+        rgba(255,255,255,.04)
+    );
+
+    backdrop-filter:blur(10px);
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:18px;
+}
+
+.question-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 0 20px rgba(208,39,83,.4);
+}
+
+.question-btn span{
+
+    font-size:24px;
+}
+
+
+/* =========================
+   ANIMATION PAGE
+========================= */
+
+#animationPage{
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(208,39,83,.12),
+        #030303 70%
+    );
+}
+
+#oracleCanvas{
+
+    position:absolute;
+
+    inset:0;
+
+    width:100%;
+    height:100%;
+}
+
+
+/* =========================
+   ANIMATION TEXT
+========================= */
+
+.animation-overlay{
+
+    position:relative;
+
+    z-index:100;
+
+    text-align:center;
+
+    pointer-events:none;
+}
+
+.animation-message{
+
+    font-size:24px;
+
+    letter-spacing:4px;
+
+    line-height:1.8;
+
+    text-shadow:
+    0 0 10px rgba(245,199,109,.5);
+
+    animation:
+    textPulse 3s infinite;
+}
+
+@keyframes textPulse{
+
+    0%{
+        opacity:.5;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:.5;
+    }
+}
+
+
+/* =========================
+   HEXAGRAM REVEAL
+========================= */
+
+.revealed-hexagram{
+
+    margin-top:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    animation:
+    revealUp 1s ease;
+}
+
+.revealed-hexagram span{
+
+    color:#f5c76d;
+
+    font-size:20px;
+
+    letter-spacing:3px;
+}
+
+.revealed-hexagram strong{
+
+    font-size:48px;
+
+    color:white;
+
+    text-shadow:
+    0 0 20px rgba(245,199,109,.6);
+}
+
+.hidden{
+    display:none;
+}
+
+@keyframes revealUp{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(30px);
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+    }
+}
+
+
+/* =========================
+   RESULT PAGE
+========================= */
+
+#resultPage{
+
+    background:
+    radial-gradient(
+        circle at center,
+        rgba(208,39,83,.15),
+        #030303 80%
+    );
+}
+
+.result-card{
+
+    width:100%;
+
+    max-width:720px;
+
+    background:
+    rgba(255,255,255,.04);
+
+    border:
+    1px solid rgba(245,199,109,.25);
+
+    border-radius:24px;
+
+    backdrop-filter:blur(20px);
+
+    padding:36px;
+}
+
+.result-category{
+
+    color:#f5c76d;
+
+    letter-spacing:2px;
+
+    margin-bottom:10px;
+}
+
+#resultName{
+
+    font-size:42px;
+
+    margin-bottom:12px;
+}
+
+.result-symbol{
+
+    color:#bbbbbb;
+
+    margin-bottom:30px;
+}
+
+.result-block{
+
+    margin-bottom:26px;
+}
+
+.result-block h3{
+
+    color:#f5c76d;
+
+    margin-bottom:10px;
+
+    font-size:18px;
+}
+
+.result-block p{
+
+    line-height:1.9;
+
+    color:#e7e7e7;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.button-row{
+
+    display:flex;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+    margin-top:20px;
+}
+
+.main-btn{
+
+    border:none;
+
+    background:#D02753;
+
+    color:white;
+
+    border-radius:14px;
+
+    padding:14px 24px;
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+.main-btn:hover{
+
+    opacity:.9;
+}
+
+.ghost-btn{
+
+    border:
+    1px solid rgba(245,199,109,.4);
+
+    background:transparent;
+
+    color:#f5c76d;
+
+    border-radius:14px;
+
+    padding:14px 24px;
+
+    cursor:pointer;
+
+    font-size:16px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:768px){
+
+    .home-card h1{
+
+        font-size:26px;
+    }
+
+    .animation-message{
+
+        font-size:20px;
+    }
+
+    .revealed-hexagram strong{
+
+        font-size:36px;
+    }
+
+    #resultName{
+
+        font-size:32px;
+    }
+
+    .result-card{
+
+        padding:24px;
+    }
+}
