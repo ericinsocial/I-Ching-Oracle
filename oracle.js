@@ -201,11 +201,12 @@ async function shareResultImage() {
 
     shareResultBtn.disabled = true;
     shareResultBtn.classList.add("is-sharing");
+    document.body.classList.add("is-sharing");
 
     try {
         const canvas = await html2canvas(resultCard, {
-            backgroundColor: null,
-            scale: Math.min(window.devicePixelRatio || 1, 2),
+            backgroundColor: "#14213D",
+            scale: 2,
             useCORS: true
         });
         const blob = await canvasToBlob(canvas);
@@ -230,6 +231,7 @@ async function shareResultImage() {
         console.error("Result sharing failed:", error);
         alert("分享圖片產生失敗，請稍後再試。");
     } finally {
+        document.body.classList.remove("is-sharing");
         shareResultBtn.disabled = false;
         shareResultBtn.classList.remove("is-sharing");
     }
