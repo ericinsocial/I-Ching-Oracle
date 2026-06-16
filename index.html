@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Oracle of Change</title>
+  <title>詠真堂</title>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -16,13 +16,12 @@
 
     <section class="home-card">
 
-      <p class="eyebrow">Oracle of Change</p>
+      <img class="site-logo" src="logo.png" alt="詠真堂">
 
       <h1>請選擇你想獲得指引的方向</h1>
 
       <p class="intro">
-        靜下心來，默念你的問題。<br>
-        選擇一個方向，讓卦象為你帶來今日的提醒。
+        有些答案&nbsp;&nbsp;只差一卦
       </p>
 
       <div class="question-grid">
@@ -80,6 +79,8 @@
 
     <div class="result-card">
 
+      <img class="site-logo" src="logo.png" alt="詠真堂">
+
       <h2 id="resultTitle"></h2>
 
       <p id="resultTrigram" class="result-trigram"></p>
@@ -106,6 +107,14 @@
           回首頁
         </button>
 
+        <a id="bookingBtn" class="main-btn booking-btn" href="https://lin.ee/9T6G8mH" target="_blank" rel="noopener noreferrer">
+          點我預約
+        </a>
+
+        <button id="shareResultBtn" class="ghost-btn">
+          分享結果
+        </button>
+
       </div>
 
     </div>
@@ -113,6 +122,7 @@
   </section>
 
 
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="oracle.js"></script>
   <script src="animation.js"></script>
 

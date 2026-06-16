@@ -1,5 +1,5 @@
 /* ==========================================
-   Oracle of Change
+   I Ching Oracle
    Page Controller
 ========================================== */
 
@@ -70,7 +70,7 @@ function startAnimation() {
     }, 2000);
 
     setTimeout(() => {
-        animationMessage.innerHTML = "卦象正在形成...";
+        animationMessage.innerHTML = "星光正在聚合...";
     }, 4500);
 
     setTimeout(() => {
@@ -86,7 +86,7 @@ function revealHexagram() {
     const randomIndex = Math.floor(Math.random() * oracleData.length);
     const hexagram = createHexagramResult(oracleData[randomIndex]);
 
-    animationMessage.innerHTML = "正在解讀卦象...";
+    animationMessage.innerHTML = "正在解讀訊息...";
     revealedNumber.innerHTML = `第 ${hexagram.number} 卦`;
     revealedName.innerHTML = hexagram.name;
     revealedHexagram.classList.remove("hidden");
@@ -136,15 +136,15 @@ function showResult(hex) {
 function getCategoryText() {
     switch (getSafeCategory()) {
         case "love":
-            return "今感情提醒";
+            return "今日感情提醒";
         case "career":
-            return "今工作提醒";
+            return "今日工作提醒";
         case "wealth":
-            return "今財運提醒";
+            return "今日財運提醒";
         case "general":
-            return "今人生提醒";
+            return "今日人生提醒";
         default:
-            return "今人生提醒";
+            return "今日人生提醒";
     }
 }
 
@@ -166,3 +166,75 @@ document.getElementById("backHomeBtn").addEventListener("click", () => {
     animationPage.classList.remove("active");
     homePage.classList.add("active");
 });
+
+/* ==========================================
+   分享結果圖片
+========================================== */
+
+const shareResultBtn = document.getElementById("shareResultBtn");
+
+function downloadImage(blob) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "oracle-result.png";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+}
+
+function canvasToBlob(canvas) {
+    return new Promise(resolve => {
+        canvas.toBlob(resolve, "image/png");
+    });
+}
+
+async function shareResultImage() {
+    const resultCard = document.querySelector(".result-card");
+
+    if (!resultCard || typeof html2canvas !== "function") {
+        alert("分享功能尚未載入完成，請稍後再試。");
+        return;
+    }
+
+    shareResultBtn.disabled = true;
+    shareResultBtn.classList.add("is-sharing");
+    document.body.classList.add("is-sharing");
+
+    try {
+        const canvas = await html2canvas(resultCard, {
+            backgroundColor: "#14213D",
+            scale: 2,
+            useCORS: true
+        });
+        const blob = await canvasToBlob(canvas);
+
+        if (!blob) {
+            throw new Error("Result image could not be generated.");
+        }
+
+        const file = new File([blob], "oracle-result.png", { type: "image/png" });
+        const shareData = {
+            title: "詠真堂占卜結果",
+            text: "我的占卜結果",
+            files: [file]
+        };
+
+        if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share(shareData);
+        } else {
+            downloadImage(blob);
+        }
+    } catch (error) {
+        console.error("Result sharing failed:", error);
+        alert("分享圖片產生失敗，請稍後再試。");
+    } finally {
+        shareResultBtn.disabled = false;
+        shareResultBtn.classList.remove("is-sharing");
+        document.body.classList.remove("is-sharing");
+    }
+}
+
+shareResultBtn.addEventListener("click", shareResultImage);
