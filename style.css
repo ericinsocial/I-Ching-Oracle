@@ -383,6 +383,22 @@ body::before{
     margin-bottom:22px;
 }
 
+.result-heading{
+    display:flex;
+    align-items:baseline;
+    gap:18px;
+    flex-wrap:nowrap;
+}
+
+.result-heading #resultTitle{
+    margin:0;
+}
+
+.result-heading #resultTrigram{
+    margin:0;
+    white-space:nowrap;
+}
+
 #resultTitle,
 .result-title{
 
@@ -554,6 +570,14 @@ body.is-sharing .result-card{
 
 body.is-sharing .result-card *{
     color:inherit;
+}
+
+
+@media(max-width:480px){
+
+    .result-heading{
+        gap:12px;
+    }
 }
 
 @media(max-width:480px){
