@@ -1,5 +1,5 @@
 /* ==========================================
-   Oracle of Change
+   I Ching Oracle
    Page Controller
 ========================================== */
 
@@ -70,7 +70,7 @@ function startAnimation() {
     }, 2000);
 
     setTimeout(() => {
-        animationMessage.innerHTML = "卦象正在形成...";
+        animationMessage.innerHTML = "星光正在聚合...";
     }, 4500);
 
     setTimeout(() => {
@@ -86,7 +86,7 @@ function revealHexagram() {
     const randomIndex = Math.floor(Math.random() * oracleData.length);
     const hexagram = createHexagramResult(oracleData[randomIndex]);
 
-    animationMessage.innerHTML = "正在解讀卦象...";
+    animationMessage.innerHTML = "正在解讀訊息...";
     revealedNumber.innerHTML = `第 ${hexagram.number} 卦`;
     revealedName.innerHTML = hexagram.name;
     revealedHexagram.classList.remove("hidden");
@@ -136,15 +136,15 @@ function showResult(hex) {
 function getCategoryText() {
     switch (getSafeCategory()) {
         case "love":
-            return "今感情提醒";
+            return "今日感情提醒";
         case "career":
-            return "今工作提醒";
+            return "今日工作提醒";
         case "wealth":
-            return "今財運提醒";
+            return "今日財運提醒";
         case "general":
-            return "今人生提醒";
+            return "今日人生提醒";
         default:
-            return "今人生提醒";
+            return "今日人生提醒";
     }
 }
 
