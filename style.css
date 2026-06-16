@@ -350,12 +350,17 @@ body::before{
 
     min-height:100dvh;
 
+    display:none;
+
     padding:12px;
 
     background:#050816;
 
     align-items:flex-start;
     justify-content:center;
+
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 #resultPage.active{
@@ -394,7 +399,7 @@ body::before{
     display:flex;
     align-items:baseline;
     justify-content:center;
-    gap:.65em;
+    gap:clamp(10px, 2vw, 18px);
     width:100%;
     flex-wrap:nowrap;
     margin-bottom:22px;
