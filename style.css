@@ -90,6 +90,19 @@ body::before{
 
     display:block;
 
+    width:min(180px, 52vw);
+
+    height:auto;
+
+    margin:0 auto 24px;
+
+    filter:drop-shadow(0 0 18px rgba(245,199,109,.28));
+}
+
+.eyebrow{
+
+    display:block;
+
     width:min(168px, 52vw);
 
     height:auto;
@@ -455,8 +468,6 @@ body::before{
 
     font-size:16px;
 
-    font-weight:700;
-
     text-decoration:none;
 
     display:inline-flex;
@@ -468,8 +479,6 @@ body::before{
 
 .main-btn:hover,
 .booking-btn:hover{
-
-    filter:brightness(1.05);
 
     box-shadow:0 0 18px rgba(216,181,106,.22);
 }
@@ -517,24 +526,13 @@ body::before{
     box-shadow:none;
 }
 
-.is-sharing .result-card,
-.is-sharing .result-card *{
-    text-shadow:none;
+#shareResultBtn.is-sharing{
+
+    cursor:wait;
+
+    opacity:.65;
 }
 
-.is-sharing .result-trigram{
-    color:#9CC4FF;
-}
-
-.is-sharing .result-category,
-.is-sharing .result-separator{
-    color:#D8B56A;
-}
-
-.is-sharing .result-advice,
-.is-sharing .result-oracle{
-    color:#ffffff;
-}
 
 /* =========================
    MOBILE
@@ -542,24 +540,16 @@ body::before{
 
 @media(max-width:768px){
 
-    body{
-        overflow:auto;
-    }
-
     .page{
 
         padding:18px;
     }
 
-    #homePage{
-        padding-top:min(32px, 6vh);
-    }
-
     .site-logo{
 
-        width:min(140px, 54vw);
+        width:min(150px, 58vw);
 
-        margin-bottom:16px;
+        margin-bottom:18px;
     }
 
     .home-card h1{
