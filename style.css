@@ -385,17 +385,16 @@ body::before{
 
 .result-heading{
     display:flex;
-    justify-content:center;
     align-items:baseline;
     gap:18px;
-    width:100%;
+    flex-wrap:nowrap;
 }
 
-#resultTitle{
+.result-heading #resultTitle{
     margin:0;
 }
 
-#resultTrigram{
+.result-heading #resultTrigram{
     margin:0;
     white-space:nowrap;
 }
