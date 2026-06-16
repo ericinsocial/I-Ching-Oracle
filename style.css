@@ -53,12 +53,16 @@ body::before{
 
     min-height:100dvh;
 
+    width:100%;
+
+    min-height:100dvh;
+
     display:none;
 
     justify-content:center;
     align-items:center;
 
-    padding:0;
+    padding:clamp(16px, 4vw, 48px);
 
     overflow-x:hidden;
     overflow-y:auto;
@@ -346,20 +350,9 @@ body::before{
 
 #resultPage{
 
-    width:100%;
-
-    min-height:100dvh;
-
-    padding:12px;
+    align-items:flex-start;
 
     background:#050816;
-
-    align-items:flex-start;
-    justify-content:center;
-}
-
-#resultPage.active{
-    display:flex;
 }
 
 .result-card{
@@ -370,11 +363,11 @@ body::before{
 
     margin:0 auto;
 
-    padding:clamp(24px, 6vw, 56px);
+    margin:0 auto;
 
-    box-sizing:border-box;
+    padding:clamp(24px, 6vw, 48px);
 
-    border-radius:24px;
+    border-radius:28px;
 
     background:#14213D;
 
@@ -453,7 +446,7 @@ body::before{
 }
 
 .result-oracle{
-    font-size:clamp(17px, 4.2vw, 24px);
+    font-size:clamp(18px, 4.6vw, 24px);
     line-height:1.9;
     word-break:break-word;
 }
@@ -577,6 +570,33 @@ body.is-sharing .result-card *{
     }
 }
 
+@media(max-width:480px){
+
+    .page{
+        padding:12px;
+    }
+
+    .result-card{
+        max-width:none;
+        padding:28px 22px;
+        border-radius:24px;
+    }
+}
+
+@media(min-width:768px){
+
+    .result-card{
+        max-width:680px;
+    }
+}
+
+@media(min-width:1200px){
+
+    .result-card{
+        max-width:760px;
+    }
+}
+
 /* =========================
    MOBILE
 ========================= */
@@ -607,6 +627,11 @@ body.is-sharing .result-card *{
     .revealed-hexagram strong{
 
         font-size:36px;
+    }
+
+    #resultTitle{
+
+        font-size:32px;
     }
 
     .main-btn,
