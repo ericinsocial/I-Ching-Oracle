@@ -201,12 +201,11 @@ async function shareResultImage() {
 
     shareResultBtn.disabled = true;
     shareResultBtn.classList.add("is-sharing");
-    document.body.classList.add("is-sharing");
 
     try {
         const canvas = await html2canvas(resultCard, {
-            backgroundColor: "#14213D",
-            scale: 2,
+            backgroundColor: null,
+            scale: Math.min(window.devicePixelRatio || 1, 2),
             useCORS: true
         });
         const blob = await canvasToBlob(canvas);
@@ -233,7 +232,6 @@ async function shareResultImage() {
     } finally {
         shareResultBtn.disabled = false;
         shareResultBtn.classList.remove("is-sharing");
-        document.body.classList.remove("is-sharing");
     }
 }
 

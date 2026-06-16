@@ -90,6 +90,19 @@ body::before{
 
     display:block;
 
+    width:min(180px, 52vw);
+
+    height:auto;
+
+    margin:0 auto 24px;
+
+    filter:drop-shadow(0 0 18px rgba(245,199,109,.28));
+}
+
+.eyebrow{
+
+    display:block;
+
     width:min(168px, 52vw);
 
     height:auto;
@@ -333,7 +346,12 @@ body::before{
 
     overflow-y:auto;
 
-    background:#050816;
+    background:
+    radial-gradient(
+        circle at center top,
+        rgba(94,140,255,.18),
+        #050816 76%
+    );
 }
 
 .result-card{
@@ -342,20 +360,20 @@ body::before{
 
     max-width:680px;
 
-    margin:0 auto;
-
-    background:#14213D;
+    background:#0B1020;
 
     color:#ffffff;
 
     border:
     1px solid rgba(216,181,106,.35);
 
-    border-radius:28px;
-
     box-shadow:0 24px 64px rgba(2,6,23,.38);
 
-    padding:clamp(24px, 6vw, 48px);
+    box-shadow:
+    0 24px 80px rgba(0,0,0,.42),
+    0 0 36px rgba(94,140,255,.12) inset;
+
+    padding:34px 36px 36px;
 }
 
 .result-card .site-logo{
@@ -367,15 +385,11 @@ body::before{
 
     color:#ffffff;
 
-    font-size:clamp(32px, 8vw, 42px);
-
-    line-height:1.25;
+    font-size:42px;
 
     margin-bottom:12px;
 
     text-shadow:0 0 22px rgba(156,196,255,.28);
-
-    word-break:break-word;
 }
 
 .result-trigram{
@@ -424,19 +438,10 @@ body::before{
     line-height:1.9;
 
     color:#ffffff;
-
-    word-break:break-word;
 }
 
 .result-advice{
     color:#F4E8C8;
-    font-size:clamp(17px, 4.2vw, 21px);
-}
-
-.result-oracle{
-    font-size:clamp(18px, 4.6vw, 24px);
-    line-height:1.9;
-    word-break:break-word;
 }
 
 /* =========================
@@ -471,8 +476,6 @@ body::before{
 
     font-size:16px;
 
-    font-weight:700;
-
     text-decoration:none;
 
     display:inline-flex;
@@ -480,16 +483,10 @@ body::before{
     justify-content:center;
 
     align-items:center;
-
-    min-height:52px;
-
-    width:100%;
 }
 
 .main-btn:hover,
 .booking-btn:hover{
-
-    filter:brightness(1.05);
 
     box-shadow:0 0 18px rgba(216,181,106,.22);
 }
@@ -497,9 +494,9 @@ body::before{
 .ghost-btn{
 
     border:
-    1px solid rgba(216,181,106,.55);
+    1px solid rgba(216,181,106,.45);
 
-    background:transparent;
+    background:rgba(16,25,47,.72);
 
     color:#D8B56A;
 
@@ -516,15 +513,32 @@ body::before{
     justify-content:center;
 
     align-items:center;
-
-    min-height:52px;
-
-    width:100%;
 }
 
 .ghost-btn:hover{
-    border-color:rgba(216,181,106,.72);
+    border-color:rgba(216,181,106,.68);
     box-shadow:0 0 18px rgba(94,140,255,.18);
+}
+
+#shareResultBtn.is-sharing{
+
+    cursor:wait;
+
+    opacity:.65;
+}
+
+.is-sharing .result-card{
+    background:#0B1020;
+    color:#ffffff;
+    border-color:rgba(216,181,106,.45);
+    box-shadow:none;
+}
+
+#shareResultBtn.is-sharing{
+
+    cursor:wait;
+
+    opacity:.65;
 }
 
 #shareResultBtn.is-sharing{
@@ -557,24 +571,16 @@ body.is-sharing .result-card *{
 
 @media(max-width:768px){
 
-    body{
-        overflow:auto;
-    }
-
     .page{
 
         padding:18px;
     }
 
-    #homePage{
-        padding-top:min(32px, 6vh);
-    }
-
     .site-logo{
 
-        width:min(140px, 54vw);
+        width:min(150px, 58vw);
 
-        margin-bottom:16px;
+        margin-bottom:18px;
     }
 
     .home-card h1{
@@ -601,4 +607,38 @@ body.is-sharing .result-card *{
         font-size:32px;
     }
 
+    .result-card{
+
+        padding:24px;
+    }
+
+    .button-row{
+
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+
+        gap:10px;
+    }
+
+    .main-btn,
+    .booking-btn,
+    .ghost-btn{
+
+        width:100%;
+
+        min-height:48px;
+
+        padding:12px 14px;
+
+        text-align:center;
+    }
+}
+
+@media(max-width:420px){
+
+    .button-row{
+
+        grid-template-columns:1fr;
+    }
 }
