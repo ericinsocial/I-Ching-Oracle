@@ -12,6 +12,8 @@ html,
 body{
     width:100%;
     min-height:100%;
+    overflow-x:hidden;
+    background:#050816;
 }
 
 body{
@@ -21,14 +23,11 @@ body{
     "Microsoft JhengHei",
     sans-serif;
 
-    background:
-    radial-gradient(circle at 50% 0%, rgba(94,140,255,.18), transparent 34%),
-    radial-gradient(circle at 12% 18%, rgba(156,196,255,.11), transparent 28%),
-    linear-gradient(180deg, #10192F 0%, #050816 56%, #050816 100%);
+    background:#050816;
 
     color:#ffffff;
 
-    overflow:hidden;
+    overflow-x:hidden;
 }
 
 body::before{
@@ -50,16 +49,19 @@ body::before{
 
 .page{
 
-    position:absolute;
+    width:100%;
 
-    inset:0;
+    min-height:100dvh;
 
     display:none;
 
     justify-content:center;
     align-items:center;
 
-    padding:24px;
+    padding:0;
+
+    overflow-x:hidden;
+    overflow-y:auto;
 }
 
 .page.active{
@@ -344,36 +346,43 @@ body::before{
 
 #resultPage{
 
-    overflow-y:auto;
+    width:100%;
 
-    background:
-    radial-gradient(
-        circle at center top,
-        rgba(94,140,255,.18),
-        #050816 76%
-    );
+    min-height:100dvh;
+
+    padding:12px;
+
+    background:#050816;
+
+    align-items:flex-start;
+    justify-content:center;
+}
+
+#resultPage.active{
+    display:flex;
 }
 
 .result-card{
 
-    width:min(100%, 680px);
+    width:100%;
 
-    max-width:680px;
+    max-width:720px;
 
-    background:#0B1020;
+    margin:0 auto;
+
+    padding:clamp(24px, 6vw, 56px);
+
+    box-sizing:border-box;
+
+    border-radius:24px;
+
+    background:#14213D;
 
     color:#ffffff;
 
-    border:
-    1px solid rgba(216,181,106,.35);
+    border:1px solid rgba(216,181,106,.35);
 
     box-shadow:0 24px 64px rgba(2,6,23,.38);
-
-    box-shadow:
-    0 24px 80px rgba(0,0,0,.42),
-    0 0 36px rgba(94,140,255,.12) inset;
-
-    padding:34px 36px 36px;
 }
 
 .result-card .site-logo{
@@ -381,11 +390,27 @@ body::before{
     margin-bottom:22px;
 }
 
-#resultTitle{
+.result-heading{
+    display:flex;
+    align-items:baseline;
+    justify-content:center;
+    gap:.65em;
+    width:100%;
+    flex-wrap:nowrap;
+    margin-bottom:22px;
+}
+
+.result-heading #resultTitle,
+.result-heading .result-trigram{
+    margin-bottom:0;
+}
+
+#resultTitle,
+.result-title{
 
     color:#ffffff;
 
-    font-size:42px;
+    font-size:clamp(36px, 8vw, 64px);
 
     margin-bottom:12px;
 
@@ -397,6 +422,8 @@ body::before{
     color:#9CC4FF;
 
     margin-bottom:22px;
+
+    font-size:clamp(20px, 4vw, 30px);
 
     word-break:break-word;
 }
@@ -414,7 +441,7 @@ body::before{
 
     margin:24px 0;
 
-    overflow:hidden;
+    overflow-x:clip;
 
     white-space:nowrap;
 }
@@ -427,7 +454,7 @@ body::before{
 
     margin-bottom:14px;
 
-    font-size:18px;
+    font-size:clamp(22px, 5vw, 34px);
 
     line-height:1.6;
 }
@@ -440,8 +467,15 @@ body::before{
     color:#ffffff;
 }
 
+.result-oracle{
+    font-size:clamp(17px, 4.2vw, 24px);
+    line-height:1.9;
+    word-break:break-word;
+}
+
 .result-advice{
     color:#F4E8C8;
+    font-size:clamp(19px, 4.5vw, 26px);
 }
 
 /* =========================
@@ -452,11 +486,18 @@ body::before{
 
     display:grid;
 
-    grid-template-columns:1fr;
+    grid-template-columns:repeat(2, 1fr);
 
     gap:14px;
 
+    width:100%;
+
     margin-top:20px;
+}
+
+.button-row button,
+.button-row a{
+    width:100%;
 }
 
 .main-btn,
@@ -494,9 +535,9 @@ body::before{
 .ghost-btn{
 
     border:
-    1px solid rgba(216,181,106,.45);
+    1px solid rgba(216,181,106,.55);
 
-    background:rgba(16,25,47,.72);
+    background:transparent;
 
     color:#D8B56A;
 
@@ -527,27 +568,6 @@ body::before{
     opacity:.65;
 }
 
-.is-sharing .result-card{
-    background:#0B1020;
-    color:#ffffff;
-    border-color:rgba(216,181,106,.45);
-    box-shadow:none;
-}
-
-#shareResultBtn.is-sharing{
-
-    cursor:wait;
-
-    opacity:.65;
-}
-
-#shareResultBtn.is-sharing{
-
-    cursor:wait;
-
-    opacity:.65;
-}
-
 body.is-sharing .result-card{
     background:#14213D !important;
     box-shadow:none !important;
@@ -558,10 +578,17 @@ body.is-sharing .result-card *{
     color:inherit;
 }
 
-@media(min-width:768px){
+@media(max-width:480px){
 
-    .button-row{
-        grid-template-columns:repeat(2, 1fr);
+    #resultPage{
+        padding:8px;
+    }
+
+    .result-card{
+        width:100%;
+        max-width:none;
+        padding:28px 22px;
+        border-radius:22px;
     }
 }
 
@@ -570,11 +597,6 @@ body.is-sharing .result-card *{
 ========================= */
 
 @media(max-width:768px){
-
-    .page{
-
-        padding:18px;
-    }
 
     .site-logo{
 
@@ -602,25 +624,6 @@ body.is-sharing .result-card *{
         font-size:36px;
     }
 
-    #resultTitle{
-
-        font-size:32px;
-    }
-
-    .result-card{
-
-        padding:24px;
-    }
-
-    .button-row{
-
-        display:grid;
-
-        grid-template-columns:1fr 1fr;
-
-        gap:10px;
-    }
-
     .main-btn,
     .booking-btn,
     .ghost-btn{
@@ -632,13 +635,5 @@ body.is-sharing .result-card *{
         padding:12px 14px;
 
         text-align:center;
-    }
-}
-
-@media(max-width:420px){
-
-    .button-row{
-
-        grid-template-columns:1fr;
     }
 }
