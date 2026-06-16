@@ -12,6 +12,8 @@ html,
 body{
     width:100%;
     min-height:100%;
+    overflow-x:hidden;
+    background:#050816;
 }
 
 body{
@@ -25,7 +27,7 @@ body{
 
     color:#ffffff;
 
-    overflow:hidden;
+    overflow-x:hidden;
 }
 
 body::before{
@@ -47,9 +49,9 @@ body::before{
 
 .page{
 
-    position:absolute;
+    width:100%;
 
-    inset:0;
+    min-height:100dvh;
 
     width:100%;
 
@@ -417,7 +419,7 @@ body::before{
 
     margin:24px 0;
 
-    overflow:hidden;
+    overflow-x:clip;
 
     white-space:nowrap;
 }
@@ -554,10 +556,17 @@ body.is-sharing .result-card *{
     color:inherit;
 }
 
-@media(min-width:768px){
+@media(max-width:480px){
 
-    .button-row{
-        grid-template-columns:repeat(2, 1fr);
+    #resultPage{
+        padding:8px;
+    }
+
+    .result-card{
+        width:100%;
+        max-width:none;
+        padding:28px 22px;
+        border-radius:22px;
     }
 }
 
