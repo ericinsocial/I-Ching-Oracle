@@ -2,9 +2,10 @@ const canvas = document.getElementById("oracleCanvas");
 const ctx = canvas.getContext("2d");
 
 let w, h, cx, cy, dpr;
+const isMobile = () => window.innerWidth < 768;
 
 function resizeCanvas(){
-  dpr = window.devicePixelRatio || 1;
+  dpr = Math.min(window.devicePixelRatio || 1, isMobile() ? 1.5 : 2);
   w = window.innerWidth;
   h = window.innerHeight;
   cx = w / 2;
@@ -37,11 +38,20 @@ const runes = ["☰","☱","☲","☳","☴","☵","☶","☷"];
 const particles = [];
 const sparks = [];
 const mist = [];
+const runeObjects = runes.map((rune,i)=>({
+  rune,
+  phase: i * 1.7,
+  radiusWave: i,
+  alphaBase: 0.22 + (i % 3) * 0.035,
+  alphaAmp: 0.42 + (i % 2) * 0.08
+}));
 
 let startTime = performance.now();
 
 function resetAnimationClock(){
   startTime = performance.now();
+  exploded = false;
+  sparks.length = 0;
 }
 
 window.resetOracleAnimation = resetAnimationClock;
@@ -55,7 +65,7 @@ function makeParticles(){
   sparks.length = 0;
   mist.length = 0;
 
-  const count = window.innerWidth < 768 ? 170 : 300;
+  const count = isMobile() ? 110 : 180;
 
   for(let i=0;i<count;i++){
     particles.push({
@@ -64,16 +74,19 @@ function makeParticles(){
       size: rand(0.7, 2.3),
       speed: rand(0.0004, 0.0018),
       alpha: rand(0.25, 0.9),
-      drift: rand(-0.4, 0.4)
+      drift: rand(-0.4, 0.4),
+      suckDist: rand(8,34)
     });
   }
 
-  for(let i=0;i<90;i++){
+  const mistCount = isMobile() ? 18 : 34;
+
+  for(let i=0;i<mistCount;i++){
     mist.push({
       x: rand(0,w),
       y: rand(0,h),
-      r: rand(80,240),
-      alpha: rand(0.015,0.05),
+      r: rand(90,220),
+      alpha: rand(0.01,0.035),
       vx: rand(-0.15,0.15),
       vy: rand(-0.12,0.12)
     });
@@ -154,7 +167,7 @@ function drawParticles(t){
     }
 
     if(ph >= 4){
-      dist = p.dist * (1 - suck) + rand(8,34) * suck;
+      dist = p.dist * (1 - suck) + p.suckDist * suck;
     }
 
     const x = cx + Math.cos(p.angle) * dist + Math.sin(t+p.angle) * p.drift * 18;
@@ -163,10 +176,7 @@ function drawParticles(t){
     ctx.beginPath();
     ctx.arc(x,y,p.size,0,Math.PI*2);
     ctx.fillStyle = `rgba(245,199,109,${p.alpha})`;
-    ctx.shadowColor = "rgba(245,199,109,0.9)";
-    ctx.shadowBlur = 10;
     ctx.fill();
-    ctx.shadowBlur = 0;
   });
 }
 
@@ -204,8 +214,6 @@ function drawRing(t, radiusRatio, reverse, alpha, fontSize){
     ctx.textBaseline = "middle";
     ctx.font = `${fontSize}px "Noto Sans TC", serif`;
     ctx.fillStyle = `rgba(245,199,109,${fade})`;
-    ctx.shadowColor = "rgba(245,199,109,0.9)";
-    ctx.shadowBlur = ph >= 3 ? 14 : 6;
     ctx.fillText(name,0,0);
     ctx.restore();
   });
@@ -215,10 +223,10 @@ function drawRunes(t){
   const ph = phase(t);
   const baseRadius = Math.min(w,h) * 0.20;
 
-  runes.forEach((rune,i)=>{
-    const blink = (Math.sin(t * 6 + i * 1.7) + 1) / 2;
-    const angle = t * (ph >= 3 ? 1.2 : 0.45) + i * Math.PI * 2 / runes.length;
-    const radius = baseRadius + Math.sin(t * 2 + i) * 18;
+  runeObjects.forEach((item,i)=>{
+    const blink = (Math.sin(t * 4 + item.phase) + 1) / 2;
+    const angle = t * (ph >= 3 ? 1.2 : 0.45) + i * Math.PI * 2 / runeObjects.length;
+    const radius = baseRadius + Math.sin(t * 2 + item.radiusWave) * 14;
 
     const x = cx + Math.cos(angle) * radius;
     const y = cy + Math.sin(angle) * radius;
@@ -226,21 +234,23 @@ function drawRunes(t){
     ctx.save();
     ctx.translate(x,y);
     ctx.rotate(-angle);
-    ctx.font = `${window.innerWidth < 768 ? 26 : 34}px serif`;
+    ctx.font = `${isMobile() ? 26 : 34}px serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = `rgba(255,232,160,${0.18 + blink * 0.65})`;
-    ctx.shadowColor = "rgba(245,199,109,1)";
-    ctx.shadowBlur = 18 + blink * 20;
-    ctx.fillText(rune,0,0);
+    ctx.fillStyle = `rgba(255,232,160,${item.alphaBase + blink * item.alphaAmp})`;
+    ctx.shadowColor = "rgba(245,199,109,0.8)";
+    ctx.shadowBlur = isMobile() ? 8 : 12;
+    ctx.fillText(item.rune,0,0);
     ctx.restore();
   });
+
+  ctx.shadowBlur = 0;
 }
 
 function drawOrb(t){
   const ph = phase(t);
 
-  let base = window.innerWidth < 768 ? 56 : 78;
+  let base = isMobile() ? 56 : 78;
   const pulse = Math.sin(t * 4) * 10;
 
   if(ph === 3) base += 10;
@@ -259,11 +269,12 @@ function drawOrb(t){
   ctx.arc(cx,cy,r,0,Math.PI*2);
   ctx.fillStyle = g;
   ctx.shadowColor = "rgba(245,199,109,1)";
-  ctx.shadowBlur = ph >= 4 ? 65 : 34;
+  ctx.shadowBlur = ph >= 4 ? (isMobile() ? 36 : 52) : (isMobile() ? 18 : 28);
   ctx.fill();
   ctx.shadowBlur = 0;
 
-  for(let i=0;i<3;i++){
+  const haloCount = isMobile() ? 2 : 3;
+  for(let i=0;i<haloCount;i++){
     const rr = r + 26 + i * 22 + Math.sin(t*2+i)*8;
     ctx.beginPath();
     ctx.arc(cx,cy,rr,0,Math.PI*2);
@@ -302,7 +313,9 @@ function drawSigilLines(t){
 function createExplosion(){
   sparks.length = 0;
 
-  for(let i=0;i<130;i++){
+  const sparkCount = isMobile() ? 70 : 110;
+
+  for(let i=0;i<sparkCount;i++){
     const a = rand(0,Math.PI*2);
     sparks.push({
       x: cx,
@@ -310,9 +323,10 @@ function createExplosion(){
       vx: Math.cos(a) * rand(2,9),
       vy: Math.sin(a) * rand(2,9),
       life: rand(40,80),
-      maxLife: rand(40,80),
+      maxLife: 0,
       size: rand(1,3)
     });
+    sparks[sparks.length - 1].maxLife = sparks[sparks.length - 1].life;
   }
 }
 
@@ -336,10 +350,7 @@ function drawExplosion(t){
     ctx.beginPath();
     ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
     ctx.fillStyle = `rgba(245,199,109,${alpha})`;
-    ctx.shadowColor = "rgba(245,199,109,1)";
-    ctx.shadowBlur = 14;
     ctx.fill();
-    ctx.shadowBlur = 0;
   });
 }
 
@@ -372,8 +383,7 @@ function animate(){
   drawBackground(t);
   drawSigilLines(t);
   drawParticles(t);
-  drawRing(t,0.34,false,0.72, window.innerWidth < 768 ? 10 : 14);
-  drawRing(t,0.25,true,0.38, window.innerWidth < 768 ? 9 : 12);
+  drawRing(t,0.34,false,0.58, isMobile() ? 10 : 14);
   drawRunes(t);
   drawOrb(t);
   drawExplosion(t);
