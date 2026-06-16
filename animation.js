@@ -120,10 +120,10 @@ function drawBackground(t){
 
   const pulse = (Math.sin(t * 1.6) + 1) / 2;
 
-  g.addColorStop(0, `rgba(245,199,109,${0.16 + pulse * 0.04})`);
-  g.addColorStop(0.18, `rgba(208,39,83,${0.22 + pulse * 0.07})`);
-  g.addColorStop(0.48, "rgba(60,5,20,0.55)");
-  g.addColorStop(1, "#020202");
+  g.addColorStop(0, `rgba(216,181,106,${0.16 + pulse * 0.04})`);
+  g.addColorStop(0.18, `rgba(94,140,255,${0.22 + pulse * 0.07})`);
+  g.addColorStop(0.48, "rgba(16,25,47,0.72)");
+  g.addColorStop(1, "#050816");
 
   ctx.fillStyle = g;
   ctx.fillRect(0,0,w,h);
@@ -138,8 +138,8 @@ function drawBackground(t){
     if(m.y > h + m.r) m.y = -m.r;
 
     const mg = ctx.createRadialGradient(m.x,m.y,0,m.x,m.y,m.r);
-    mg.addColorStop(0, `rgba(208,39,83,${m.alpha})`);
-    mg.addColorStop(1, "rgba(208,39,83,0)");
+    mg.addColorStop(0, `rgba(94,140,255,${m.alpha})`);
+    mg.addColorStop(1, "rgba(94,140,255,0)");
     ctx.fillStyle = mg;
     ctx.beginPath();
     ctx.arc(m.x,m.y,m.r,0,Math.PI*2);
@@ -175,7 +175,7 @@ function drawParticles(t){
 
     ctx.beginPath();
     ctx.arc(x,y,p.size,0,Math.PI*2);
-    ctx.fillStyle = `rgba(245,199,109,${p.alpha})`;
+    ctx.fillStyle = `rgba(216,181,106,${p.alpha})`;
     ctx.fill();
   });
 }
@@ -213,7 +213,7 @@ function drawRing(t, radiusRatio, reverse, alpha, fontSize){
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.font = `${fontSize}px "Noto Sans TC", serif`;
-    ctx.fillStyle = `rgba(245,199,109,${fade})`;
+    ctx.fillStyle = `rgba(216,181,106,${fade})`;
     ctx.fillText(name,0,0);
     ctx.restore();
   });
@@ -237,8 +237,8 @@ function drawRunes(t){
     ctx.font = `${isMobile() ? 26 : 34}px serif`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillStyle = `rgba(255,232,160,${item.alphaBase + blink * item.alphaAmp})`;
-    ctx.shadowColor = "rgba(245,199,109,0.8)";
+    ctx.fillStyle = `rgba(216,181,106,${item.alphaBase + blink * item.alphaAmp})`;
+    ctx.shadowColor = "rgba(216,181,106,0.8)";
     ctx.shadowBlur = isMobile() ? 8 : 12;
     ctx.fillText(item.rune,0,0);
     ctx.restore();
@@ -260,15 +260,15 @@ function drawOrb(t){
   const r = base + pulse;
 
   const g = ctx.createRadialGradient(cx,cy,2,cx,cy,r);
-  g.addColorStop(0,"rgba(255,255,240,1)");
-  g.addColorStop(0.28,"rgba(245,199,109,1)");
-  g.addColorStop(0.62,"rgba(208,39,83,0.95)");
-  g.addColorStop(1,"rgba(208,39,83,0)");
+  g.addColorStop(0,"rgba(246,249,255,1)");
+  g.addColorStop(0.28,"rgba(216,181,106,1)");
+  g.addColorStop(0.62,"rgba(94,140,255,0.95)");
+  g.addColorStop(1,"rgba(94,140,255,0)");
 
   ctx.beginPath();
   ctx.arc(cx,cy,r,0,Math.PI*2);
   ctx.fillStyle = g;
-  ctx.shadowColor = "rgba(245,199,109,1)";
+  ctx.shadowColor = "rgba(216,181,106,1)";
   ctx.shadowBlur = ph >= 4 ? (isMobile() ? 36 : 52) : (isMobile() ? 18 : 28);
   ctx.fill();
   ctx.shadowBlur = 0;
@@ -278,7 +278,7 @@ function drawOrb(t){
     const rr = r + 26 + i * 22 + Math.sin(t*2+i)*8;
     ctx.beginPath();
     ctx.arc(cx,cy,rr,0,Math.PI*2);
-    ctx.strokeStyle = `rgba(245,199,109,${0.14 - i*0.035})`;
+    ctx.strokeStyle = `rgba(216,181,106,${0.14 - i*0.035})`;
     ctx.lineWidth = 2;
     ctx.stroke();
   }
@@ -302,7 +302,7 @@ function drawSigilLines(t){
     ctx.beginPath();
     ctx.moveTo(Math.cos(a1)*radius, Math.sin(a1)*radius);
     ctx.lineTo(Math.cos(a2)*radius, Math.sin(a2)*radius);
-    ctx.strokeStyle = `rgba(245,199,109,${ph >= 3 ? 0.16 : 0.07})`;
+    ctx.strokeStyle = `rgba(216,181,106,${ph >= 3 ? 0.16 : 0.07})`;
     ctx.lineWidth = 1;
     ctx.stroke();
   }
@@ -349,7 +349,7 @@ function drawExplosion(t){
 
     ctx.beginPath();
     ctx.arc(s.x,s.y,s.size,0,Math.PI*2);
-    ctx.fillStyle = `rgba(245,199,109,${alpha})`;
+    ctx.fillStyle = `rgba(216,181,106,${alpha})`;
     ctx.fill();
   });
 }
@@ -362,7 +362,7 @@ function drawShockwave(t){
 
   ctx.beginPath();
   ctx.arc(cx,cy,r,0,Math.PI*2);
-  ctx.strokeStyle = `rgba(245,199,109,${0.55 * (1-progress)})`;
+  ctx.strokeStyle = `rgba(216,181,106,${0.55 * (1-progress)})`;
   ctx.lineWidth = 4;
   ctx.stroke();
 }

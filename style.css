@@ -11,8 +11,7 @@
 html,
 body{
     width:100%;
-    height:100%;
-    overflow:hidden;
+    min-height:100%;
 }
 
 body{
@@ -22,11 +21,28 @@ body{
     "Microsoft JhengHei",
     sans-serif;
 
-    background:#030303;
+    background:
+    radial-gradient(circle at 50% 0%, rgba(94,140,255,.18), transparent 34%),
+    radial-gradient(circle at 12% 18%, rgba(156,196,255,.11), transparent 28%),
+    linear-gradient(180deg, #10192F 0%, #050816 56%, #050816 100%);
 
-    color:white;
+    color:#ffffff;
+
+    overflow:hidden;
 }
 
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background-image:
+    radial-gradient(circle, rgba(216,181,106,.75) 0 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(156,196,255,.6) 0 1px, transparent 1.5px);
+    background-size:120px 120px, 180px 180px;
+    background-position:18px 24px, 72px 90px;
+    opacity:.18;
+}
 
 /* =========================
    PAGE
@@ -50,10 +66,15 @@ body{
     display:flex;
 }
 
-
 /* =========================
    HOME
 ========================= */
+
+#homePage{
+    align-items:flex-start;
+    padding-top:min(40px, 7vh);
+    overflow-y:auto;
+}
 
 .home-card{
 
@@ -65,35 +86,46 @@ body{
     z-index:10;
 }
 
-.eyebrow{
+.site-logo{
 
-    color:#f5c76d;
+    display:block;
 
-    letter-spacing:4px;
+    width:min(168px, 52vw);
 
-    margin-bottom:16px;
+    height:auto;
 
-    font-size:14px;
+    margin:0 auto 22px;
+
+    filter:drop-shadow(0 0 18px rgba(156,196,255,.32));
+}
+
+.site-logo[src=""]{
+    display:none;
 }
 
 .home-card h1{
+
+    color:#ffffff;
 
     font-size:32px;
 
     line-height:1.4;
 
-    margin-bottom:20px;
+    margin-bottom:14px;
+
+    text-shadow:0 0 20px rgba(94,140,255,.3);
 }
 
 .intro{
 
-    color:#cccccc;
+    color:#D8B56A;
 
     line-height:1.8;
 
-    margin-bottom:40px;
-}
+    letter-spacing:3px;
 
+    margin-bottom:34px;
+}
 
 /* =========================
    QUESTION BUTTONS
@@ -110,7 +142,7 @@ body{
 
 .question-btn{
 
-    border:none;
+    border:1px solid rgba(216,181,106,.35);
 
     border-radius:18px;
 
@@ -119,13 +151,15 @@ body{
     background:
     linear-gradient(
         135deg,
-        rgba(208,39,83,.25),
-        rgba(255,255,255,.04)
+        rgba(16,25,47,.94),
+        rgba(11,16,32,.88)
     );
+
+    box-shadow:0 0 24px rgba(94,140,255,.12) inset;
 
     backdrop-filter:blur(10px);
 
-    color:white;
+    color:#ffffff;
 
     cursor:pointer;
 
@@ -146,15 +180,17 @@ body{
 
     transform:translateY(-3px);
 
+    border-color:rgba(216,181,106,.62);
+
     box-shadow:
-    0 0 20px rgba(208,39,83,.4);
+    0 0 24px rgba(94,140,255,.35),
+    0 0 20px rgba(216,181,106,.16) inset;
 }
 
 .question-btn span{
 
     font-size:24px;
 }
-
 
 /* =========================
    ANIMATION PAGE
@@ -165,8 +201,8 @@ body{
     background:
     radial-gradient(
         circle at center,
-        rgba(208,39,83,.12),
-        #030303 70%
+        rgba(94,140,255,.16),
+        #050816 72%
     );
 }
 
@@ -179,7 +215,6 @@ body{
     width:100%;
     height:100%;
 }
-
 
 /* =========================
    ANIMATION TEXT
@@ -198,6 +233,8 @@ body{
 
 .animation-message{
 
+    color:#ffffff;
+
     font-size:24px;
 
     letter-spacing:4px;
@@ -205,7 +242,8 @@ body{
     line-height:1.8;
 
     text-shadow:
-    0 0 10px rgba(245,199,109,.5);
+    0 0 14px rgba(156,196,255,.55),
+    0 0 28px rgba(94,140,255,.28);
 
     animation:
     textPulse 3s infinite;
@@ -214,7 +252,7 @@ body{
 @keyframes textPulse{
 
     0%{
-        opacity:.5;
+        opacity:.58;
     }
 
     50%{
@@ -222,10 +260,9 @@ body{
     }
 
     100%{
-        opacity:.5;
+        opacity:.58;
     }
 }
-
 
 /* =========================
    HEXAGRAM REVEAL
@@ -247,7 +284,7 @@ body{
 
 .revealed-hexagram span{
 
-    color:#f5c76d;
+    color:#D8B56A;
 
     font-size:20px;
 
@@ -258,10 +295,11 @@ body{
 
     font-size:48px;
 
-    color:white;
+    color:#ffffff;
 
     text-shadow:
-    0 0 20px rgba(245,199,109,.6);
+    0 0 20px rgba(156,196,255,.55),
+    0 0 30px rgba(216,181,106,.28);
 }
 
 .hidden{
@@ -287,18 +325,19 @@ body{
     }
 }
 
-
 /* =========================
    RESULT PAGE
 ========================= */
 
 #resultPage{
 
+    overflow-y:auto;
+
     background:
     radial-gradient(
-        circle at center,
-        rgba(208,39,83,.15),
-        #030303 80%
+        circle at center top,
+        rgba(94,140,255,.18),
+        #050816 76%
     );
 }
 
@@ -308,29 +347,41 @@ body{
 
     max-width:720px;
 
-    background:
-    rgba(255,255,255,.04);
+    background:#0B1020;
+
+    color:#ffffff;
 
     border:
-    1px solid rgba(245,199,109,.25);
+    1px solid rgba(216,181,106,.35);
 
     border-radius:24px;
 
-    backdrop-filter:blur(20px);
+    box-shadow:
+    0 24px 80px rgba(0,0,0,.42),
+    0 0 36px rgba(94,140,255,.12) inset;
 
-    padding:36px;
+    padding:34px 36px 36px;
+}
+
+.result-card .site-logo{
+    width:min(132px, 46vw);
+    margin-bottom:22px;
 }
 
 #resultTitle{
 
+    color:#ffffff;
+
     font-size:42px;
 
     margin-bottom:12px;
+
+    text-shadow:0 0 22px rgba(156,196,255,.28);
 }
 
 .result-trigram{
 
-    color:#bbbbbb;
+    color:#9CC4FF;
 
     margin-bottom:22px;
 }
@@ -342,7 +393,7 @@ body{
 
 .result-separator{
 
-    color:rgba(245,199,109,.65);
+    color:rgba(216,181,106,.78);
 
     letter-spacing:2px;
 
@@ -351,7 +402,7 @@ body{
 
 .result-category{
 
-    color:#f5c76d;
+    color:#D8B56A;
 
     letter-spacing:2px;
 
@@ -365,9 +416,12 @@ body{
 
     line-height:1.9;
 
-    color:#e7e7e7;
+    color:#ffffff;
 }
 
+.result-advice{
+    color:#F4E8C8;
+}
 
 /* =========================
    BUTTONS
@@ -384,13 +438,14 @@ body{
     margin-top:20px;
 }
 
-.main-btn{
+.main-btn,
+.booking-btn{
 
-    border:none;
+    border:1px solid rgba(216,181,106,.65);
 
-    background:#D02753;
+    background:#D8B56A;
 
-    color:white;
+    color:#050816;
 
     border-radius:14px;
 
@@ -399,21 +454,34 @@ body{
     cursor:pointer;
 
     font-size:16px;
+
+    font-weight:700;
+
+    text-decoration:none;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
 }
 
-.main-btn:hover{
+.main-btn:hover,
+.booking-btn:hover{
 
-    opacity:.9;
+    filter:brightness(1.05);
+
+    box-shadow:0 0 18px rgba(216,181,106,.22);
 }
 
 .ghost-btn{
 
     border:
-    1px solid rgba(245,199,109,.4);
+    1px solid rgba(216,181,106,.45);
 
-    background:transparent;
+    background:rgba(16,25,47,.72);
 
-    color:#f5c76d;
+    color:#D8B56A;
 
     border-radius:14px;
 
@@ -422,8 +490,51 @@ body{
     cursor:pointer;
 
     font-size:16px;
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
 }
 
+.ghost-btn:hover{
+    border-color:rgba(216,181,106,.68);
+    box-shadow:0 0 18px rgba(94,140,255,.18);
+}
+
+#shareResultBtn.is-sharing{
+
+    cursor:wait;
+
+    opacity:.65;
+}
+
+.is-sharing .result-card{
+    background:#0B1020;
+    color:#ffffff;
+    border-color:rgba(216,181,106,.45);
+    box-shadow:none;
+}
+
+.is-sharing .result-card,
+.is-sharing .result-card *{
+    text-shadow:none;
+}
+
+.is-sharing .result-trigram{
+    color:#9CC4FF;
+}
+
+.is-sharing .result-category,
+.is-sharing .result-separator{
+    color:#D8B56A;
+}
+
+.is-sharing .result-advice,
+.is-sharing .result-oracle{
+    color:#ffffff;
+}
 
 /* =========================
    MOBILE
@@ -431,9 +542,33 @@ body{
 
 @media(max-width:768px){
 
+    body{
+        overflow:auto;
+    }
+
+    .page{
+
+        padding:18px;
+    }
+
+    #homePage{
+        padding-top:min(32px, 6vh);
+    }
+
+    .site-logo{
+
+        width:min(140px, 54vw);
+
+        margin-bottom:16px;
+    }
+
     .home-card h1{
 
         font-size:26px;
+    }
+
+    .intro{
+        margin-bottom:28px;
     }
 
     .animation-message{
@@ -454,5 +589,35 @@ body{
     .result-card{
 
         padding:24px;
+    }
+
+    .button-row{
+
+        display:grid;
+
+        grid-template-columns:1fr 1fr;
+
+        gap:10px;
+    }
+
+    .main-btn,
+    .booking-btn,
+    .ghost-btn{
+
+        width:100%;
+
+        min-height:48px;
+
+        padding:12px 14px;
+
+        text-align:center;
+    }
+}
+
+@media(max-width:420px){
+
+    .button-row{
+
+        grid-template-columns:1fr;
     }
 }
